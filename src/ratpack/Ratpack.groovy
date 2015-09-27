@@ -1,10 +1,22 @@
-import ratpack.config.ConfigData
+//import ratpack.config.ConfigData
+
+import static ratpack.groovy.Groovy.ratpack
+import static ratpack.groovy.Groovy.groovyMarkupTemplate
 import ratpack.groovy.template.MarkupTemplateModule
 
-import static ratpack.groovy.Groovy.groovyMarkupTemplate
-import static ratpack.groovy.Groovy.ratpack
 
 ratpack {
+    handlers {
+        get("hello") {
+            render "Hello, World!"
+        }
+
+        get("goodbye") {
+            render "Goodbye, World!"
+        }
+    }
+}
+/*ratpack {
   bindings {
     module MarkupTemplateModule
     // Define config file/Env settings path
@@ -33,3 +45,4 @@ ratpack {
     files { dir "public" }
   }
 }
+*/
