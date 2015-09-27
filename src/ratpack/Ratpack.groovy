@@ -1,11 +1,34 @@
-//import ratpack.config.ConfigData
+import ratpack.config.ConfigData
 
 import static ratpack.groovy.Groovy.ratpack
 import static ratpack.groovy.Groovy.groovyMarkupTemplate
 import ratpack.groovy.template.MarkupTemplateModule
 
-
 ratpack {
+  handlers {
+    get('getmapping') {
+        render 'some data'
+    }
+    post('postmapping') {
+        println request.body.text
+        render 'some output'
+    }
+  }
+}
+
+/*ratpack {
+  handlers {
+    handler {
+        println 'some stuff done here'
+        next()
+    }
+    handler {
+      render 'some output'
+    }
+  }
+}*/
+
+/*ratpack {
     handlers {
         get("hello") {
             render "Hello, World!"
@@ -15,7 +38,8 @@ ratpack {
             render "Goodbye, World!"
         }
     }
-}
+}*/
+
 /*ratpack {
   bindings {
     module MarkupTemplateModule
