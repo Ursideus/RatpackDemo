@@ -5,6 +5,21 @@ import static ratpack.groovy.Groovy.groovyMarkupTemplate
 import ratpack.groovy.template.MarkupTemplateModule
 
 ratpack {
+    handlers {
+        get('users/:id') { //ex: /users/xyz123
+            render context.pathTokens['id']
+        }
+        get('users') { //ex: /users/
+            render 'no path token'
+        }
+        get('repeatString/:string/:times:[\\d]+') {
+            //ex: /repeatString/X/10  would send back 10 Xs
+            render context.pathTokens['string'] * context.pathTokens['times'].toInteger()
+        }
+    }
+}
+
+/*ratpack {
   handlers {
     get('getmapping') {
         render 'some data'
@@ -15,7 +30,7 @@ ratpack {
     }
   }
 }
-
+*/
 /*ratpack {
   handlers {
     handler {
