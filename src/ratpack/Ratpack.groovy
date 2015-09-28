@@ -105,6 +105,7 @@ class Person {
     }
 
     files { dir "public" }
+    //files { it.dir('public') }
   }
 }
 */
