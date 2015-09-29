@@ -13,10 +13,10 @@ ratpack {
     }
     handlers {
         get {
-            render 'Hello Bluemix!'
+            render 'Hello Visitor!'
         }
         get('person') {
-            render json(new Person(id: 1, name: 'John Doe', age: 31))
+            render json(new Person(id: 1, name: 'John Doe', age: 33))
         }
     }
 }
