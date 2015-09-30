@@ -3,30 +3,85 @@ import ratpack.config.ConfigData
 import static ratpack.groovy.Groovy.ratpack
 import static ratpack.groovy.Groovy.groovyMarkupTemplate
 import ratpack.groovy.template.MarkupTemplateModule
+import ratpack.form.Form
 
 import ratpack.jackson.guice.JacksonModule
 import static ratpack.jackson.Jackson.json
 
+/* ----------------------------------------------------------- */
+// Handling different HTTP verbs for the same route.
+/* ----------------------------------------------------------- */
 ratpack {
-    bindings {
-        module JacksonModule
-    }
-    handlers {
+  handlers {
+    handler {
+      byMethod {
         get {
-            render 'Hello Visitor!'
+          render "Hello World!"
         }
-        get('person') {
-            render json(new Person(id: 1, name: 'John Doe', age: 33))
+        post {
+          Form form = parse(Form)
+          render "Hello ${form.data}"
         }
+      }
     }
+  }
 }
 
-class Person {
-   Long id
-   String name
-   int age
-}
+// -> Java equivalent:
+// public class Main {
+//   public static void main(String[] args) throws Exception {
+//     RatpackServer.start(spec -> spec
+//         .serverConfig(ServerConfig.noBaseDir())
+//         .handlers(chain -> chain
+//           .handler(c -> c
+//           	.byMethod(spec -> spec
+//           		.get(ctx -> ctx.render("Hello World!"))
+//           		.post(ctx -> {
+//           			Form form = ctx.parse(Form);
+//           			ctx.render("Hello " + form.get("data"));
+//           		})
+//           	)
+//           )
+//         )
+//     );
+//   }
+// }
 
+// ratpack {
+//   handlers {
+//     get {
+//       render "Hello World!"
+//     }
+//     post {
+//       Form form = parse(Form)
+//       render
+//     }
+//   }
+// }
+
+/* ----------------------------------------------------------- */
+//  Bind with model class
+/* ----------------------------------------------------------- */
+// ratpack {
+//     bindings {
+//         module JacksonModule
+//     }
+//     handlers {
+//         get {
+//             render 'Hello Visitor!'
+//         }
+//         get('person') {
+//             render json(new Person(id: 1, name: 'John Doe', age: 33))
+//         }
+//     }
+// }
+//
+// class Person {
+//    Long id
+//    String name
+//    int age
+// }
+/* ----------------------------------------------------------- */
 /*ratpack {
     handlers {
         get('users/:id') { //ex: /users/xyz123
@@ -41,7 +96,7 @@ class Person {
         }
     }
 }*/
-  
+
 /*ratpack {
   handlers {
     get('getmapping') {
