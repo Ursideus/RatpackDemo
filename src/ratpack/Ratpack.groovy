@@ -7,7 +7,6 @@ import ratpack.form.Form
 //import ratpack.jackson.guice.JacksonModule
 //import static ratpack.jackson.Jackson.json
 
-
 /* ----------------------------------------------------------- */
 // Handlers with Mime Type Negotiation.
 /* ----------------------------------------------------------- */
@@ -30,6 +29,10 @@ ratpack {
               }
               plainText {
                 render content
+              }
+              // custom type
+              type("application/hal+json") {
+                render content + ' with custom mime type'
               }
               noMatch {
                 render "I have no clue what you wanted from me."
@@ -241,8 +244,12 @@ ratpack {
       render groovyMarkupTemplate("index.gtpl", title: "My Ratpack App")
     }
 
-    files { dir "public" }
-    //files { it.dir('public') }
+    files { it.dir('public') }
+    //files { dir "public" }
+    // fileSystem('public') { f ->
+    //         f.files()
+    //     }
+
   }
 }
 */
