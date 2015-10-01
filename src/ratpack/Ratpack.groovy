@@ -1,31 +1,89 @@
-import ratpack.config.ConfigData
-
 import static ratpack.groovy.Groovy.ratpack
-import static ratpack.groovy.Groovy.groovyMarkupTemplate
-import ratpack.groovy.template.MarkupTemplateModule
+//import ratpack.config.ConfigData
+//import static ratpack.groovy.Groovy.groovyMarkupTemplate
+//import ratpack.groovy.template.MarkupTemplateModule
 import ratpack.form.Form
 
-import ratpack.jackson.guice.JacksonModule
-import static ratpack.jackson.Jackson.json
+//import ratpack.jackson.guice.JacksonModule
+//import static ratpack.jackson.Jackson.json
 
+
+/* ----------------------------------------------------------- */
+// Handlers with Mime Type Negotiation.
+/* ----------------------------------------------------------- */
 ratpack {
   handlers {
-	   prefix("api") {
+    prefix("api") {
       handler {
         byMethod {
           get {
-            render "Hello World!"
+            String content = "This is my content"
+            byContent {
+              json {
+                render "{\"content\": \"$content\"}"
+              }
+              xml {
+                render "<content>$content</content>"
+              }
+              html {
+                render "<!DOCTYPE html><html><body>$content</body></html>"
+              }
+              plainText {
+                render content
+              }
+              noMatch {
+                render "I have no clue what you wanted from me."
+              }
+            }
           }
           post {
             Form form = parse(Form)
-            form.get
-            render "Hello ${form.data}"
+            String data = form.data
+            byContent {
+              json {
+                render "{\"message\": \"Received $data\"}"
+              }
+              xml {
+                render "<message>Received $data</message>"
+              }
+              html {
+                render "<!DOCTYPE html><html><body>Thank you for submitting $data</body></html>"
+              }
+              plainText {
+                render data
+              }
+              noMatch {
+                render "I have no clue what you wanted from me."
+              }
+            }
           }
         }
       }
     }
   }
 }
+
+/* ----------------------------------------------------------- */
+// Handlers for specific prefix.
+/* ----------------------------------------------------------- */
+// ratpack {
+//   handlers {
+// 	   prefix("api") {
+//       handler {
+//         byMethod {
+//           get {
+//             render "Hello World!"
+//           }
+//           post {
+//             Form form = parse(Form)
+//             form.get
+//             render "Hello ${form.data}"
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
 /* ----------------------------------------------------------- */
 // Handling different HTTP verbs for the same route.
@@ -66,6 +124,9 @@ ratpack {
 //   }
 // }
 
+/* ----------------------------------------------------------- */
+//  Handlers with URI prefix
+/* ----------------------------------------------------------- */
 // ratpack {
 //   handlers {
 //     prefix("api") {
