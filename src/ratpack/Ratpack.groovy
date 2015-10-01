@@ -8,24 +8,43 @@ import ratpack.form.Form
 import ratpack.jackson.guice.JacksonModule
 import static ratpack.jackson.Jackson.json
 
-/* ----------------------------------------------------------- */
-// Handling different HTTP verbs for the same route.
-/* ----------------------------------------------------------- */
 ratpack {
   handlers {
-    handler {
-      byMethod {
-        get {
-          render "Hello World!"
-        }
-        post {
-          Form form = parse(Form)
-          render "Hello ${form.data}"
+	   prefix("api") {
+      handler {
+        byMethod {
+          get {
+            render "Hello World!"
+          }
+          post {
+            Form form = parse(Form)
+            form.get
+            render "Hello ${form.data}"
+          }
         }
       }
     }
   }
 }
+
+/* ----------------------------------------------------------- */
+// Handling different HTTP verbs for the same route.
+/* ----------------------------------------------------------- */
+// ratpack {
+//   handlers { chain ->
+//     chain.handler { contx ->
+//       contx.byMethod { spec ->
+//         spec.get { ctx ->
+//           ctx.render "this is root get handler!"
+//         }
+//         // post {
+//         //   Form form = parse(Form)
+//         //   render "Hello ${form.data}"
+//         // }
+//       }
+//     }
+//   }
+// }
 
 // -> Java equivalent:
 // public class Main {
@@ -49,12 +68,14 @@ ratpack {
 
 // ratpack {
 //   handlers {
-//     get {
-//       render "Hello World!"
-//     }
-//     post {
-//       Form form = parse(Form)
-//       render
+//     prefix("api") {
+//       get {
+//         render "Hello World! from get()"
+//       }
+//       post {
+//         Form form = parse(Form)
+//         render 'OK'
+//       }
 //     }
 //   }
 // }
