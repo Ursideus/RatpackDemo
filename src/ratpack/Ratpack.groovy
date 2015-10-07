@@ -7,64 +7,74 @@ import ratpack.form.Form
 //import ratpack.jackson.guice.JacksonModule
 //import static ratpack.jackson.Jackson.json
 
+
+ratpack {
+  bindings {
+    add(new DefaultRouteHandler("Hello World!"))
+  }
+  handlers {
+    get(DefaultRouteHandler)
+  }
+}
+
 /* ----------------------------------------------------------- */
 // Handlers with Mime Type Negotiation.
 /* ----------------------------------------------------------- */
-ratpack {
-  handlers {
-    prefix("api") {
-      handler {
-        byMethod {
-          get {
-            String content = "This is my content"
-            byContent {
-              json {
-                render "{\"content\": \"$content\"}"
-              }
-              xml {
-                render "<content>$content</content>"
-              }
-              html {
-                render "<!DOCTYPE html><html><body>$content</body></html>"
-              }
-              plainText {
-                render content
-              }
-              // custom type
-              type("application/hal+json") {
-                render content + ' with custom mime type'
-              }
-              noMatch {
-                render "I have no clue what you wanted from me."
-              }
-            }
-          }
-          post {
-            Form form = parse(Form)
-            String data = form.data
-            byContent {
-              json {
-                render "{\"message\": \"Received $data\"}"
-              }
-              xml {
-                render "<message>Received $data</message>"
-              }
-              html {
-                render "<!DOCTYPE html><html><body>Thank you for submitting $data</body></html>"
-              }
-              plainText {
-                render data
-              }
-              noMatch {
-                render "I have no clue what you wanted from me."
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+// ratpack {
+//   handlers {
+//     prefix("api") {
+//       handler {
+//         byMethod {
+//           get {
+//             String content = "This is my content"
+//             byContent {
+//               json {
+//                 render "{\"content\": \"$content\"}"
+//               }
+//               xml {
+//                 render "<content>$content</content>"
+//               }
+//               html {
+//                 render "<!DOCTYPE html><html><body>$content</body></html>"
+//               }
+//               plainText {
+//                 render content
+//               }
+//               // add custom type handler
+//               type("application/hal+json") {
+//                 render content + ' with custom mime type'
+//               }
+//               noMatch {
+//                 render "I have no clue what you wanted from me."
+//               }
+//             }
+//           }
+//           post {
+//             Form form = parse(Form)
+//             String data = form.data
+//             byContent {
+//               json {
+//                 render "{\"message\": \"Received $data\"}"
+//               }
+//               xml {
+//                 render "<message>Received $data</message>"
+//               }
+//               html {
+//                 render "<!DOCTYPE html><html><body>Thank you for submitting $data</body></html>"
+//               }
+//               plainText {
+//                 render data
+//               }
+//               noMatch {
+//                 render "I have no clue what you wanted from me."
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
 // -> Usage
 // HTTP GET: curl -H "Accept: application/json" localhost:5050/api
