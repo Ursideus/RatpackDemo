@@ -66,6 +66,18 @@ ratpack {
   }
 }
 
+// -> Usage
+// HTTP GET: curl -H "Accept: application/json" localhost:5050/api
+// HTTP GET: curl -H "Accept: application/xml" localhost:5050/api
+// HTTP GET: curl -H "Accept: text/html" localhost:5050/api
+// HTTP GET: curl -H "Accept: text/plain" localhost:5050/api
+// HTTP GET: curl -H "Accept: uCantMatchThis" localhost:5050/api
+// HTTP POST: curl -d "data=foo" -H "Accept: application/json" localhost:5050/api
+// HTTP POST: curl -d "data=foo" -H "Accept: application/xml" localhost:5050/api
+// HTTP POST: curl -d "data=foo" -H "Accept: text/html" localhost:5050/api
+// HTTP POST: curl -d "data=foo" -H "Accept: text/plain" localhost:5050/api
+// HTTP POST: curl -d "data=foo" -H "Accept: uCantMatchThis" localhost:5050/api
+
 /* ----------------------------------------------------------- */
 // Handlers for specific prefix.
 /* ----------------------------------------------------------- */
