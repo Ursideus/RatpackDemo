@@ -7,7 +7,9 @@ import ratpack.form.Form
 //import ratpack.jackson.guice.JacksonModule
 //import static ratpack.jackson.Jackson.json
 
-
+/* ----------------------------------------------------------- */
+// Standalone Handler.
+/* ----------------------------------------------------------- */
 ratpack {
   bindings {
     add(new DefaultRouteHandler("Hello World!"))
