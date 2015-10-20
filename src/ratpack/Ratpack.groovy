@@ -8,7 +8,7 @@ import ratpack.form.Form
 //import static ratpack.jackson.Jackson.json
 
 /* ----------------------------------------------------------- */
-// Standalone Handler.
+// Standalone Handler w/ argumant evaluation.
 /* ----------------------------------------------------------- */
 ratpack {
   bindings {
@@ -16,8 +16,21 @@ ratpack {
   }
   handlers {
     get(DefaultRouteHandler)
+    get(":name", DefaultRouteHandler)
   }
 }
+
+/* ----------------------------------------------------------- */
+// Standalone Handler.
+/* ----------------------------------------------------------- */
+// ratpack {
+//   bindings {
+//     add(new DefaultRouteHandler("Hello World!"))
+//   }
+//   handlers {
+//     get(DefaultRouteHandler)
+//   }
+// }
 
 /* ----------------------------------------------------------- */
 // Handlers with Mime Type Negotiation.
