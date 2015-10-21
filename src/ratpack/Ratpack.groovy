@@ -1,24 +1,49 @@
-import static ratpack.groovy.Groovy.ratpack
+import ratpack.handling.Context
+import ratpack.handling.Handler
+//import ratpack.jackson.JacksonModule
+//import ratpack.registry.Registries
 //import ratpack.config.ConfigData
 //import static ratpack.groovy.Groovy.groovyMarkupTemplate
 //import ratpack.groovy.template.MarkupTemplateModule
-import ratpack.form.Form
+//import ratpack.form.Form
+import static ratpack.groovy.Groovy.ratpack
+import static ratpack.jackson.Jackson.json
 
-//import ratpack.jackson.guice.JacksonModule
-//import static ratpack.jackson.Jackson.json
+/* ----------------------------------------------------------- */
+// Standalone Handler w/ user agent evaluation.
+/* ----------------------------------------------------------- */
+
+ratpack {
+  // bindings {
+  //    add(new UserAgentVersioningHandler_1())
+  //  }
+  handlers {
+    handler(new UserAgentVersioningHandler()) // (3)
+
+    handler("api") { UserAgentVersioningHandler.ClientVersion clientVersion -> // (4)
+      if (clientVersion == UserAgentVersioningHandler.ClientVersion.V1) {
+        render "V1 Model"
+      } else if (clientVersion == UserAgentVersioningHandler.ClientVersion.V2) {
+        render "V2 Model"
+      } else {             // it must be V3 at this point, since the versioning
+        render "V3 Model"  // handler has figured out the request qualifies
+      }
+    }
+  }
+}
 
 /* ----------------------------------------------------------- */
 // Standalone Handler w/ argumant evaluation.
 /* ----------------------------------------------------------- */
-ratpack {
-  bindings {
-    add(new DefaultRouteHandler("Hello World!"))
-  }
-  handlers {
-    get(DefaultRouteHandler)
-    get(":name", DefaultRouteHandler)
-  }
-}
+// ratpack {
+//   bindings {
+//     add(new DefaultRouteHandler("Hello World!"))
+//   }
+//   handlers {
+//     get(DefaultRouteHandler)
+//     get(":name", DefaultRouteHandler)
+//   }
+// }
 
 /* ----------------------------------------------------------- */
 // Standalone Handler.
