@@ -23,8 +23,12 @@ dependencies {
 
   //compile ratpack.dependency('config')
   //compile ratpack.dependency("jackson-guice")
-
-  testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+  compile ratpack.dependency('rx')
+  testCompile ratpack.dependency('test')
+  testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
+  //testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+  testCompile 'cglib:cglib:2.2.2'
+  testCompile 'org.objenesis:objenesis:2.1'
 
   // Default SLF4J binding.  Note that this is a blocking implementation.
   // See here for a non blocking appender http://logging.apache.org/log4j/2.x/manual/async.html
